@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <SDL3/SDL_gpu.h>
 #include <SDL3/SDL_init.h>
 #include <SDL3/SDL_log.h>
 
@@ -18,6 +19,7 @@ public:
 
 private:
     std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> m_window;
+    std::unique_ptr<SDL_GPUDevice, decltype(&SDL_DestroyGPUDevice)> m_gpuDevice;
 
     SDL_AppResult OnQuit();
     SDL_AppResult OnRender();
