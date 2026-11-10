@@ -17,6 +17,22 @@ public:
         APP_LOG_CATEGORY_GENERIC = SDL_LOG_CATEGORY_CUSTOM
     };
 
+    struct Particle {
+        float position[2];
+        float velocity[2];
+        float color[4];
+    };
+    static_assert(sizeof(Particle) == 32);
+
+    struct SimParams { float deltaTime; float time; Uint32 particleCount; float _pad; };
+    struct ViewParams { float aspectScale[2]; float particleSize; float _pad; };
+
+    SDL_GPUBuffer* m_particleBuffer = nullptr;
+    SDL_GPUComputePipeline* m_computePipeline = nullptr;
+    SDL_GPUGraphicsPipeline* m_renderPipeline = nullptr;
+    Uint64 m_lastTicks = 0;
+    float m_time = 0.0f;
+
 private:
     std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> m_window;
     std::unique_ptr<SDL_GPUDevice, decltype(&SDL_DestroyGPUDevice)> m_gpuDevice;
